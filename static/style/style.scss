@@ -75,23 +75,33 @@ $blue: #202d5a;
 }
 
 ul {
-    display: block;
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 0px;
+	display: block;
+	list-style-type: disc;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 0px;
 }
 
-.message-bubble {
+.message-bubble-right {
 	margin-left: 50%;
 	margin-bottom: 13px;
 	float: right;
 	width: fit-content;
-	font-family: 'Roboto Slab', serif;
+	font-family: "Roboto Slab", serif;
 	border-radius: 4px;
 	background-color: #cce4fd;
+}
+
+.message-bubble-left {
+	margin-right: 50%;
+	margin-bottom: 13px;
+	float: left;
+	width: fit-content;
+	font-family: "Roboto Slab", serif;
+	border-radius: 4px;
+	background-color: #d8d9dd;
 }
 
 .msg-text {
@@ -113,14 +123,14 @@ ul {
 }
 
 .msg-value {
-	font-family: 'Roboto', sans-serif;
+	font-family: "Roboto", sans-serif;
 	font-size: 15px;
 	line-height: 0;
 }
 
 #anchor {
-    overflow-anchor: auto;
-    height: 1px;
+	overflow-anchor: auto;
+	height: 1px;
 }
 
 #channel-banner {

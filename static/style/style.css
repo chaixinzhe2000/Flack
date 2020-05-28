@@ -82,7 +82,7 @@ ul {
   padding-inline-start: 0px;
 }
 
-.message-bubble {
+.message-bubble-right {
   margin-left: 50%;
   margin-bottom: 13px;
   float: right;
@@ -90,6 +90,16 @@ ul {
   font-family: "Roboto Slab", serif;
   border-radius: 4px;
   background-color: #cce4fd;
+}
+
+.message-bubble-left {
+  margin-right: 50%;
+  margin-bottom: 13px;
+  float: left;
+  width: fit-content;
+  font-family: "Roboto Slab", serif;
+  border-radius: 4px;
+  background-color: #d8d9dd;
 }
 
 .msg-text {

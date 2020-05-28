@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			document.querySelector('#greetings').innerHTML = `Welcome to the chat, ${cappedName}`;
 		}
 	} else {
-		var cappedName = localStorage.getItem('username').toUpperCase();
+		const cappedName = localStorage.getItem('username').toUpperCase();
 		document.querySelector('#greetings').innerHTML = `Welcome to the chat, ${cappedName}`;
 		document.querySelector('#send').disabled = true;
 		document.querySelector('#messages').onkeyup = () => {
@@ -19,40 +19,52 @@ document.addEventListener('DOMContentLoaded', () => {
 			else
 				document.querySelector('#send').disabled = true;
 		};
+
 		const username = localStorage.getItem('username')
-		document.querySelector('#send').onclick = () => {
-			var msgBubble = document.createElement('div');
-			msgBubble.className = "message-bubble"
-			var messageValue = document.querySelector('#messages').value;
-			// setting up message time
-			const month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-			var today = new Date();
-			var d = today.getDate();
-			var m = today.getMonth();
-			var h = today.getHours();
-			var minute = today.getMinutes();
-			function checkTime(i) {
-				if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
-				return i.toString();
+		var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+		socket.on('connect', () => {
+			document.querySelector('#send').onclick = () => {
+				var messageValue = document.querySelector('#messages').value;
+				// setting up message time
+				const month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+				var today = new Date();
+				var d = today.getDate();
+				var m = today.getMonth();
+				var h = today.getHours();
+				var minute = today.getMinutes();
+				function checkTime(i) {
+					if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+					return i.toString();
+				}
+				d = checkTime(d)
+				m = month_names_short[m].toUpperCase();
+				h = checkTime(h);
+				minute = checkTime(minute);
+				var msgTime = d.concat(" ", m, " ", h, ":", minute);
+				socket.emit('submit-message', { 'user': username, 'time': msgTime, 'message': messageValue });
+				console.log(msgTime)
+				document.querySelector('#messages').value = '';
+				document.querySelector('#send').disabled = true;
+				return false;
+
 			}
-			d = checkTime(d)
-			m = month_names_short[m].toUpperCase();
-			h = checkTime(h);
-			minute= checkTime(minute);
-			var msgTime = d.concat(" ", m, " ", h, ":", minute);
-			// outputing values
+		})
+
+		socket.on('incoming-message', data => {
+			var msgBubble = document.createElement('div');
+			if (data.user === username) {
+				msgBubble.className = "message-bubble-right"
+			} else {
+				msgBubble.className = "message-bubble-left"
+			}
 			msgBubble.innerHTML = `
 			<div class="msg-text">
-			<span class="msg-username"> ${username} </span>
-			<span class="msg-time"> ${msgTime} </span> </br>
-			<span class="msg-value"> ${messageValue}</span> </div>`
+			<span class="msg-username"> ${data.user} </span>
+			<span class="msg-time"> ${data.time} </span> </br>
+			<span class="msg-value"> ${data.message}</span> </div>`
 			document.querySelector('#sent-messages').append(msgBubble);
-			document.querySelector('#messages').value = '';
-			document.querySelector('#send').disabled = true;
-			return false;
-		};
 
-
+		});
 	}
 })
 
