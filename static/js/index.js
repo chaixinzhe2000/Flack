@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		document.querySelector('#username-form').onsubmit = () => {
 			var nameValue = document.getElementById("username-data").value;
 			localStorage.setItem('username', nameValue);
-			var cappedName = localStorage.getItem('username').toUpperCase();
-			document.querySelector('#greetings').innerHTML = `Welcome to the chat, ${cappedName}`;
+			var username = localStorage.getItem('username');
+			document.querySelector('#greetings').innerHTML = `Welcome to the chat, ${username}`;
 		}
 	} else {
-		const cappedName = localStorage.getItem('username').toUpperCase();
-		document.querySelector('#greetings').innerHTML = `Welcome to the chat, ${cappedName}`;
+		const username = localStorage.getItem('username')
+		document.querySelector('#greetings').innerHTML = `Welcome to the chat, ${username}`;
 		document.querySelector('#send').disabled = true;
 		document.querySelector('#messages').onkeyup = () => {
 			if (document.querySelector('#messages').value.length > 0)
@@ -20,7 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
 				document.querySelector('#send').disabled = true;
 		};
 
-		const username = localStorage.getItem('username')
+		var input = document.getElementById("messages");
+		// Execute a function when the user releases a key on the keyboard
+		input.addEventListener("keyup", function (event) {
+			console.log("hello")
+			// Number 13 is the "Enter" key on the keyboard
+			if (event.keyCode === 13) {
+				// Cancel the default action, if needed
+				event.preventDefault();
+				// Trigger the button element with a click
+				document.getElementById("send").click();
+			}
+		});
+
 		var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 		socket.on('connect', () => {
 			document.querySelector('#send').onclick = () => {
@@ -46,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				document.querySelector('#messages').value = '';
 				document.querySelector('#send').disabled = true;
 				return false;
-
 			}
 		})
 
@@ -62,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			<span class="msg-username"> ${data.user} </span>
 			<span class="msg-time"> ${data.time} </span> </br>
 			<span class="msg-value"> ${data.message}</span> </div>`
-			document.querySelector('#sent-messages').append(msgBubble);
+			document.querySelector('#message-wrapper').append(msgBubble);
 
 		});
 	}
