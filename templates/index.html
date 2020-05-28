@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="shortcut icon" href="static/favicon.ico">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+		crossorigin="anonymous"></script>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab:wght@300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;500;600;700&family=Cabin:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,265;0,400;0,500;0,700;1,200;1,400;1,500;1,700&family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Josefin+Slab:wght@600;700&display=swap"
+		rel="stylesheet">
+	<script src="/static/js/slimscroll.js"></script>
+	<title>Flack</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style/style.css')}}">
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+	<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</head>
+
+<body>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">User Registration</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="login-popup">
+						<form id="username-form">
+							<div class="form-group">
+								<label>Username</label>
+								<input type="text" name="username" id="username-data" class="form-control"
+									placeholder="example: andy345">
+								<small class="form-text text-muted">This is the name that others will see.</small>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">Register</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="{{url_for('index')}}" id="header-logo">FLACK 1.0</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+			aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarText">
+			<ul class="navbar-nav mr-auto">
+			</ul>
+			<span class="navbar-text" id="greetings">
+				Welcome to the site!
+			</span>
+		</div>
+	</nav>
+	<div class="container-fluid" id="index-container">
+		<div class="row d-flex justify-content-center">
+			<div id="info-container" class="col-xl-3" style="text-align: center;">
+				<h2>CHANNELS</h2>
+			</div>
+			<div id="chat-container" class="col-xl-8">
+				<div id="message-wrapper" style="text-align: left">
+					<p id="channel-banner"> You are connected to: CHAI</p>
+					<div id="sent-messages" style="overflow-anchor: none;">
+						<div id="anchor"></div>
+					</div>
+				</div>
+				<div id="input-wrapper">
+					<div class="input-group" id="message-input">
+						<input type="text" autocomplete="off" id="messages" class="form-control"
+							placeholder="Leave a Message...">
+						<div class="input-group-append">
+							<input id="send" type="submit" class="btn btn-outline-secondary">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
