@@ -23,6 +23,7 @@ body {
 	font-weight: 800;
 	font-size: 1.2rem;
 }
+
 #info-container {
 	position: fixed;
 	top: 10;
@@ -87,7 +88,7 @@ ul {
 }
 
 .message-bubble-right {
-	margin-left: 50%;
+	margin-left: 70%;
 	margin-bottom: 13px;
 	float: right;
 	width: fit-content;
@@ -97,7 +98,7 @@ ul {
 }
 
 .message-bubble-left {
-	margin-right: 50%;
+	margin-right: 70%;
 	margin-bottom: 13px;
 	float: left;
 	width: fit-content;
@@ -113,7 +114,7 @@ ul {
 .msg-username {
 	float: left;
 	font-weight: 600;
-	font-size: 16px;
+	font-size: 15px;
 }
 
 .msg-time {
@@ -130,10 +131,46 @@ ul {
 	line-height: 0;
 }
 
+#current-channel-banner {
+	background-color: $blue;
+	color: $pink;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: 600;
+}
+
 #channel-banner {
 	background-color: $blue;
 	color: $pink;
 	text-align: center;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	font-weight: 600;
+}
+
+.btn-secondary {
+	margin-top: 20px;
+	margin-bottom: -10px;
+    color: $pink;
+	background-color:$blue;
+	border-radius: 0px;
+	font-size: 14px;
+	border-radius: 5px;
+}
+
+.btn-secondary:hover {
+	color: $blue;
+	background-color: $pink;
+	border-color: $pink;
+}
+
+.new-user-text {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-family: "Roboto Slab", serif;
+	font-weight: 500;
+	text-align: center;
+	padding-left: 30%;
+	padding-right: 30%;
 }

@@ -85,7 +85,7 @@ ul {
 }
 
 .message-bubble-right {
-  margin-left: 50%;
+  margin-left: 70%;
   margin-bottom: 13px;
   float: right;
   width: fit-content;
@@ -95,7 +95,7 @@ ul {
 }
 
 .message-bubble-left {
-  margin-right: 50%;
+  margin-right: 70%;
   margin-bottom: 13px;
   float: left;
   width: fit-content;
@@ -111,7 +111,7 @@ ul {
 .msg-username {
   float: left;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .msg-time {
@@ -128,12 +128,48 @@ ul {
   line-height: 0;
 }
 
+#current-channel-banner {
+  background-color: #202d5a;
+  color: #ffd2c9;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+
 #channel-banner {
   background-color: #202d5a;
   color: #ffd2c9;
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
+  font-weight: 600;
+}
+
+.btn-secondary {
+  margin-top: 20px;
+  margin-bottom: -10px;
+  color: #ffd2c9;
+  background-color: #202d5a;
+  border-radius: 0px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.btn-secondary:hover {
+  color: #202d5a;
+  background-color: #ffd2c9;
+  border-color: #ffd2c9;
+}
+
+.new-user-text {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: "Roboto Slab", serif;
+  font-weight: 500;
+  text-align: center;
+  padding-left: 30%;
+  padding-right: 30%;
 }
 
 /*# sourceMappingURL=style.css.map */

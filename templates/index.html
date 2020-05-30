@@ -14,7 +14,6 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 		crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://use.typekit.net/usw3mzx.css">
 	<link
 		href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab:wght@300;400;500;600;700;800;900&display=swap"
 		rel="stylesheet">
@@ -74,18 +73,25 @@
 	<div class="container-fluid" id="index-container">
 		<div class="row d-flex justify-content-center">
 			<div id="info-container" class="col-xl-3" style="text-align: center;">
-				<h2>CHANNELS</h2>
+				<p id="channel-banner">Available Channels</p>
+				<div class="input-group" id="channel-input">
+					<input type="text" autocomplete="off" id="channel-name" class="form-control"
+						placeholder="Create a new channel">
+					<div class="input-group-append">
+						<input id="create-channel" value="Create" type="submit" class="btn btn-outline-secondary" autofocus>
+					</div>
+				</div>
+				<div id="channel-list"></div>
 			</div>
 			<div id="chat-container" class="col-xl-8">
-				<p id="channel-banner"> You are connected to: CHAI</p>
-				<div id="message-wrapper" style="text-align: left">
-				</div>
+				<p id="current-channel-banner"> You are connected to: CHAI</p>
+				<div id="message-wrapper" style="text-align: left"></div>
 				<div id="input-wrapper">
 					<div class="input-group" id="message-input">
 						<input type="text" autocomplete="off" id="messages" class="form-control"
 							placeholder="Leave a Message...">
 						<div class="input-group-append">
-							<input id="send" type="submit" class="btn btn-outline-secondary" autofocus>
+							<input id="send" value="Send" type="submit" class="btn btn-outline-secondary" autofocus>
 						</div>
 					</div>
 				</div>
