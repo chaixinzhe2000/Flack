@@ -1,5 +1,4 @@
 Flask
 Flask-SocketIO
 flask-login
-turbogears
 gunicorn
