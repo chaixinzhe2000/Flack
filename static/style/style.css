@@ -85,7 +85,7 @@ ul {
 }
 
 .message-bubble-right {
-  margin-left: 70%;
+  margin-left: 60%;
   margin-bottom: 13px;
   float: right;
   width: fit-content;
@@ -95,7 +95,7 @@ ul {
 }
 
 .message-bubble-left {
-  margin-right: 70%;
+  margin-right: 60%;
   margin-bottom: 13px;
   float: left;
   width: fit-content;

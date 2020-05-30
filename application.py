@@ -25,9 +25,16 @@ def send_msg(data):
 	time = data['time']
 	message = data['message']
 	channel = data['channel']
-	message_array = []
-	message_array.append(message)
-	channels[channel] = message_array
+	if channel not in messages:
+		message_array = [user, time, message]
+		messages[channel] = []
+		messages[channel].append(message_array)
+	else:
+		message_array = messages[channel]
+		if len(message_array) > 100:
+			message_array.pop(0)
+		new_message = [user, time, message]
+		messages[channel].append(new_message)
 	emit("incoming-message", {'user': user,
 							  'time': time, 'message': message}, room=channel)
 
@@ -64,5 +71,8 @@ def on_leave(data):
 @socketio.on('retrieve-history')
 def retrieve(data):
 	room = data['room']
-	prev_msg = channels[room]
-	emit("chat-history", {'prev-message': prev_msg}, room=room)
+	if messages[room] is None or len(messages[room]) == 0:
+		prev_msg = []
+	else:
+		prev_msg = messages[room]
+	emit("chat-history", {'prev_message': prev_msg}, room=room)
