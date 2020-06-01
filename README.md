@@ -1,4 +1,4 @@
-# Project 2
+# Project 2: Flack Chat
 
 Web Programming with Python and JavaScript
 
