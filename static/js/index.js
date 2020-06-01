@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			// setting up the channel banner
 			document.querySelector('#current-channel-banner').innerHTML = `You are connected to: ${currChannel} Channel`;
 
+			// create channel button
 			document.querySelector('#create-channel').onclick = () => {
 				var channelName = document.querySelector('#channel-name').value;
 				socket.emit('create-channel', { 'channel-name': channelName, 'submitter': username });
@@ -120,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				document.querySelector('#create-channel').disabled = true;
 			}
 
+			// message sending functionality
 			document.querySelector('#send').onclick = () => {
 				var messageValue = document.querySelector('#messages').value;
 				// setting up message time
@@ -172,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		})
 
+		// retrieve previous messages
 		function message_retrieval(button, channel) {
 			button.addEventListener('click', () => {
 				var channelName = channel;
