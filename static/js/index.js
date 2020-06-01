@@ -53,9 +53,24 @@ document.addEventListener('DOMContentLoaded', () => {
 			socket.emit('join', { 'username': username, 'room': 'Public' });
 			currChannel = 'Public'
 
+			// retrieving channel buttons
+			socket.emit('retrieve-channel', { 'username': username })
+			socket.on('channel-history', data => {
+				if (data.username === username) {
+					var channel_list = data.prev_channel
+					for (i = 0; i < channel_list.length; i++) {
+						var channel_button = document.createElement('div');
+						channel_button.className = "channel-button"
+						channel_button.innerHTML =
+							`<button type="button" data-name="${channel_list[i]}" class="btn btn-secondary btn-lg btn-block">${channel_list[i]}</button>`
+						document.querySelector('#channel-list').append(channel_button);
+						message_retrieval(channel_button, channel_list[i])
+					}
+				}
+			})
+
 			// retreiving old messages in Public Channel
 			socket.emit('retrieve-history', { 'room': currChannel });
-						
 			// receiving emitted messages
 			socket.on('chat-history', data => {
 				document.querySelector('#message-wrapper').innerHTML = ""
@@ -142,37 +157,41 @@ document.addEventListener('DOMContentLoaded', () => {
 				channel_button.innerHTML =
 					`<button type="button" data-name="${data.name}" class="btn btn-secondary btn-lg btn-block">${data.name}</button>`
 				document.querySelector('#channel-list').append(channel_button);
-				channel_button.addEventListener('click', () => {
-					var channelName = data.name;
-					// leave/join module
-					socket.emit('leave', { 'username': username, 'room': currChannel });
-					currChannel = channelName;
-					socket.emit('join', { 'username': username, 'room': currChannel });
-					socket.emit('retrieve-history', { 'room': currChannel });
-					document.querySelector('#message-wrapper').innerHTML = ""
-					// receiving emitted messages
-					socket.on('chat-history', data => {
-						document.querySelector('#message-wrapper').innerHTML = ""
-						// successfully retrieved previous messages
-						for (i = 0; i < data.prev_message.length; i++) {
-							var msgBubble = document.createElement('div');
-							if (data.prev_message[i][0] === username) {
-								msgBubble.className = "message-bubble-right"
-							} else {
-								msgBubble.className = "message-bubble-left"
-							}
-							msgBubble.innerHTML = `
-							<div class="msg-text">
-							<span class="msg-username"> ${data.prev_message[i][0]} </span>
-							<span class="msg-time"> ${data.prev_message[i][1]} </span> </br>
-							<span class="msg-value"> ${data.prev_message[i][2]}</span> </div>`
-							document.querySelector('#message-wrapper').append(msgBubble);
-						}
-					})
-					document.querySelector('#current-channel-banner').innerHTML = `You are connected to: ${currChannel} Channel`;
-				})
+				message_retrieval(channel_button, data.name)
 			}
 		})
+
+		function message_retrieval(button, channel) {
+			button.addEventListener('click', () => {
+				var channelName = channel;
+				// leave/join module
+				socket.emit('leave', { 'username': username, 'room': currChannel });
+				currChannel = channelName;
+				socket.emit('join', { 'username': username, 'room': currChannel });
+				socket.emit('retrieve-history', { 'room': currChannel });
+				document.querySelector('#message-wrapper').innerHTML = ""
+				// receiving emitted messages
+				socket.on('chat-history', data => {
+					document.querySelector('#message-wrapper').innerHTML = ""
+					// successfully retrieved previous messages
+					for (i = 0; i < data.prev_message.length; i++) {
+						var msgBubble = document.createElement('div');
+						if (data.prev_message[i][0] === username) {
+							msgBubble.className = "message-bubble-right"
+						} else {
+							msgBubble.className = "message-bubble-left"
+						}
+						msgBubble.innerHTML = `
+						<div class="msg-text">
+						<span class="msg-username"> ${data.prev_message[i][0]} </span>
+						<span class="msg-time"> ${data.prev_message[i][1]} </span> </br>
+						<span class="msg-value"> ${data.prev_message[i][2]}</span> </div>`
+						document.querySelector('#message-wrapper').append(msgBubble);
+					}
+				})
+				document.querySelector('#current-channel-banner').innerHTML = `You are connected to: ${currChannel} Channel`;
+			})
+		}
 
 		// receiving emitted messages
 		socket.on('incoming-user', data => {

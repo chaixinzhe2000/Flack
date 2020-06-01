@@ -1,8 +1,7 @@
 import os
 
 from flask import Flask, jsonify, render_template, request
-from flask_socketio import SocketIO, emit, send
-from flask_socketio import join_room, leave_room
+from flask_socketio import SocketIO, emit, send, join_room, leave_room
 import sys
 
 
@@ -10,7 +9,9 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
-channels,messages = {}, {}
+channels, messages = {}, {}
+channels['Public'] = 'Public'
+messages['Public'] = []
 
 
 @app.route("/")
@@ -45,7 +46,8 @@ def create_channel(data):
 	if name in channels:
 		name = 'rejected'
 	else:
-		channels[name] = True
+		channels[name] = name
+		messages[name] = []
 	submitter = data['submitter']
 	emit("incoming-channel-name", {'name': name,
 								   'submitter': submitter}, broadcast=True)
@@ -57,7 +59,8 @@ def on_join(data):
 	room = data['room']
 	join_room(room)
 	message = str(username) + ' has entered the room.'
-	emit("incoming-user", {'message': message, 'username': username}, room=room)
+	emit("incoming-user", {'message': message,
+						   'username': username}, room=room)
 
 
 @socketio.on('leave')
@@ -67,6 +70,13 @@ def on_leave(data):
 	leave_room(room)
 	message = str(username) + ' has left the room.'
 	emit("outgoing-user", {'message': message}, room=room)
+
+
+@socketio.on('retrieve-channel')
+def retrieve_channel(data):
+	username = data['username']
+	emit("channel-history", {'prev_channel': list(channels.keys()), 'username': username}, broadcast=True)
+
 
 @socketio.on('retrieve-history')
 def retrieve(data):
