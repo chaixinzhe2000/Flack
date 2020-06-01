@@ -11,4 +11,4 @@ multiple people are sharing a computer/browser.
 
 An `incomplete` deployment of this web app can be found at: https://flack-chai.herokuapp.com/
 
-- [x] `resolve deployment issue on Heroku`
+- [ ] `resolve deployment issue on Heroku`
