@@ -15,7 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		document.querySelector('#greetings').innerHTML = `Welcome to the chat, ${username}`;
 
 		// setting up current channel name
-		var currChannel = undefined;
+		var currChannel = 'Public';
+		if (!localStorage.getItem('channel')) {
+			localStorage.setItem('channel', currChannel)
+		}
 
 		// to control the message button
 		document.querySelector('#send').disabled = true;
@@ -45,13 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 
+		var change_name = document.getElementById("change-name")
+		change_name.addEventListener("click", function () {
+			localStorage.removeItem('username');
+			location.reload();
+		})
+
 		// connecting to socket.io
 		var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
 		socket.on('connect', () => {
-			// automatically join room 'public'
-			socket.emit('join', { 'username': username, 'room': 'Public' });
-			currChannel = 'Public'
+			// automatically join room 'public' if channel is undefined
+			var local_channel = localStorage.getItem('channel')
+			socket.emit('join', { 'username': username, 'room': local_channel });
+			currChannel = local_channel
 
 			// retrieving channel buttons
 			socket.emit('retrieve-channel', { 'username': username })
@@ -100,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				// join-leave module
 				socket.emit('leave', { 'username': username, 'room': currChannel });
 				currChannel = channelName;
+				localStorage.setItem('channel', currChannel)
 				socket.emit('join', { 'username': username, 'room': currChannel });
 				document.querySelector('#message-wrapper').innerHTML = ""
 				document.querySelector('#current-channel-banner').innerHTML = `You are connected to: ${currChannel} Channel`;
@@ -167,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				// leave/join module
 				socket.emit('leave', { 'username': username, 'room': currChannel });
 				currChannel = channelName;
+				localStorage.setItem('channel', currChannel)
 				socket.emit('join', { 'username': username, 'room': currChannel });
 				socket.emit('retrieve-history', { 'room': currChannel });
 				document.querySelector('#message-wrapper').innerHTML = ""
