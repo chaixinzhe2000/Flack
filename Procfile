@@ -1,1 +1,1 @@
-web: gunicorn -k eventlet application:app
+web: gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 module:application
